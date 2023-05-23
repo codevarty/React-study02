@@ -6,6 +6,8 @@
   - 모든 사용자 인터페이스가 컴포넌트로 이루어져 있다.
   - 컴포넌트는 html, css, js 의 결합이다. 그 중 html 과 자바스크립트의 결합이 가장 중요하다.
   - 모든 종류의 웹 애플리케이션은 컴포넌트로 나눌 수 있다.
+  - JSX를 통한 사용자 정의 HTML 이다.
+  - 컴포넌튼는 개발자가 원하는 모양을 나타낸다.
 - 특징
   - 재사용성이 뛰어남
   - 우려 사항 분리: 코드 베이스를 작고 관리 가능한 단위로 유지할 수 있게 함
@@ -152,3 +154,33 @@
   - props를 통해 컴포넌트를 다양하게 사용 가능
   - App.js와 컴포넌트 파일간의 데이터 공유
   - 재사용 가능한 컴포는넌트를 만들 수 있음
+
+## 6. 합성
+- 정의
+  - 컴포넌트 안에 다른 컴포넌트를 포함시키는 것
+  - 사용자 정의 컴포넌트로 컨텐츠를 감싼는 래퍼 태그로 쓰일 수 있음
+  ```javascript
+  // Card.js
+  // 공통된 스타일을 가지는 컴포넌트를 사용
+  function Card(props) {
+    // class를 지정하기 위해 props.className을 사용
+    // 클래스를 구분하기 위해 공백을 사용하여 클래스를 연결
+    const classes = 'card ' + props.className;
+    //props.children은 컴포넌트 태그 안에 있는 내용을 사용한다는 의미
+    return <div className={classes}>{props.children}</div>
+  }
+  // ExpenseItem.js
+  function ExpenseItem() {
+    return (
+      // 사용자 정의 컴포넌트에 class 지정 불가
+      <Card className="expense-item">
+        <div>...</div>
+      </Card>
+    )
+  }
+  ```
+
+- 특징
+  - 컴포넌트를 재사용할 수 있음
+  - 컴포넌트를 더 작은 컴포넌트로 나눌 수 있음
+  - 래퍼 컴포넌트를 사용하여 컴포넌트에 공통적인 부분을 추출할 수 있음
