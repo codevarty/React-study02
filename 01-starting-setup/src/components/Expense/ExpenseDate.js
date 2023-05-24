@@ -1,6 +1,6 @@
 // component for date
 import './ExpenseDate.css'
-function ExpenseDate(props) {
+const ExpenseDate = (props) => {
   // toLocaleString() 함수는 날짜 객체를 특정 언어에 맞는 문자열로 변환
   const month = props.date.toLocaleString("en-US", { month: "long" });
   const day = props.date.toLocaleString("en-US", { day: "2-digit" });

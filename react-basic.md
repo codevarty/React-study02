@@ -83,6 +83,7 @@
 
 ## 5. 컴포넌트 만들기
 - 명령형 접근 방식
+  - 결과를 얻기 위한 과정에 집중한다.
   - 일반적인 자바스크립트 코드
   - 코드가 복잡해지고, 유지보수가 어려워짐
   ```javascript
@@ -92,10 +93,19 @@
   document.getElementById('root').append(para);
   ```
 - 선언형 접근 방식
+  - 원하는 결과(UI)를 정의하고 라이브러리가 이를 처리
   - 리액트에서 사용하는 코드
   - 코드가 간결해지고, 유지보수가 쉬워짐
   ```javascript
   function App() {
+    return (
+      <div>
+        <p>This is also visible!</p>
+      </div>
+    )
+  }
+  // Arrow Function 위의 코드와 기능이 같다.
+  const App = () => {
     return (
       <div>
         <p>This is also visible!</p>

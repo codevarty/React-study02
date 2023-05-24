@@ -3,7 +3,7 @@ import Card from '../UI/Card';
 import ExpenseDate from './ExpenseDate';
 import './ExpenseItem.css';
 // props 객체 매개 변수를 사용하여 데이터를 전달
-function ExpenseItem(props) {
+const ExpenseItem = (props) => {
 
   return (
     <Card className="expense-item">
