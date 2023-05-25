@@ -15,6 +15,8 @@
 - `useState()`는 컴포넌트를 랜더링하는 state를 생성한다.
   - React Hook으로 불린다.
   - 반드시 컴포넌트 함수 안에서 정의 되어야 한다.
+  - 반환값으로 배열을 반환
+  - 각 값은 state와 state를 변경하는 함수이다.
 - `UseState()` 사용
   ```javascript
   import React, {useState} from 'react';
