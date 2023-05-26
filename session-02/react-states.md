@@ -22,6 +22,7 @@
   import React, {useState} from 'react';
   function App() {
     // state에 기본값을 지정할 수 있다.
+    // 의도치 않는 갑 할당을 피하기 위해 사용
     const [text, setText] = useState('Hello');
     return (
       <div className="App">
@@ -36,6 +37,7 @@
   - setText는 state를 변경하는 함수이다. text를 정함
   - useState의 첫 번째 반환값은 현재 상태를 나타냄
   - 두번째 반환값은 상태를 업데이트하는 함수이다.
+  - useState는 처음 랜더링 될 때 한번만 호출된다.
 - state 값을 업데이트 하는 방법
   ```javascript
   // state 값을 업데이트 하는 방법
@@ -49,6 +51,7 @@
   ```
     - state를 업데이트하는 함수가 실행되면 컴포넌트가 랜더링 된다.
     - 함수가 호출 되자마자 state가 변경되는 것이
+    - useState는 자신의 state만 변경한다.
 
 
 ## 2. 이밴트
@@ -78,3 +81,18 @@
   ```
   - 컴포넌트도 함수이기 때문에 컴포넌트가 다시 반환되지 않는한 버튼이 내용은 변경되지 않는다.
   - 컴포넌트를 사용하는 것은 함수를 호충하는 것이다.
+
+## 3. state를 이용한 사용자 입력 리스닝
+- input 태그에 onChange 이벤트를 사용하여 사용자 입력을 감지한다.
+  - onChange 이벤트는 input 태그의 값이 변경될 때 마다 발생
+  - input 태그에 값을 입력할 때 마다 이벤트가 발생
+- onChange에 들어가는 함수 매개변수에 event를 지정하면 이벤트 객체를 받을 수 있다.
+  - event.target.value를 사용하여 input 태그의 현재 값 접근 가능
+  ```javascript
+  const handleChange = (event) => {
+    // input 태그의 입력 값 출력
+    console.log(event.target.value);
+  }
+  <input type="text" onChange={handleChange} />
+  ```
+  - event.target은 이벤트가 발생한 요소를 가리킨다.
