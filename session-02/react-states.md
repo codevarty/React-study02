@@ -8,10 +8,11 @@
 
 ## 1. state
 - 사용자와 상호작용을 하는 동적인 웹 페이지를 만들기 위해 필요
-- 별도의 state를 지정하지 않으면 컴포넌트는 정적인 웹 페지로 한번의 state만 갖는다.
+- 별도의 state를 지정하지 않으면 컴포넌트는 정적인 웹 페이지로 한번의 state만 갖는다.
 - 값을 변경하기 위해서는 state가 필요함
 - 리액트는 보통 컴포넌트는 한번만 실행한다.
 - state는 값이 변경 되면 컴포넌트를 다시 랜더링 한다.
+- 상태를 저장하기 위해서 state를 사용한다.
 - `useState()`는 컴포넌트를 랜더링하는 state를 생성한다.
   - React Hook으로 불린다.
   - 반드시 컴포넌트 함수 안에서 정의 되어야 한다.
@@ -54,6 +55,7 @@
     - useState는 자신의 state만 변경한다.
 
 
+
 ## 2. 이밴트
 - addEventListener를 사용하지 않고도 이벤트를 다룰 수 있다.
 - HTML의 이벤트 속성은 모두 on으로 시작한다.
@@ -82,6 +84,21 @@
   - 컴포넌트도 함수이기 때문에 컴포넌트가 다시 반환되지 않는한 버튼이 내용은 변경되지 않는다.
   - 컴포넌트를 사용하는 것은 함수를 호충하는 것이다.
 
+- form은 onSubmit을 통한 이벤트 발셍
+  - button을 클릭했을 때 이벤트 발생
+  ```javascript
+  const handleSubmit = (event) => {
+    // form의 기본 동작을 막는다.
+    event.preventDefault();
+    console.log('submitted');
+  }
+  <form onSubmit={handleSubmit}>
+  // 버튼 코드...
+  </form>
+  ```
+  - preventDefault()를 사용하여 새로고침을 방지
+  - form 태그 안에 있는 button 태그를 클릭하면 submit 이벤트가 발생
+
 ## 3. state를 이용한 사용자 입력 리스닝
 - input 태그에 onChange 이벤트를 사용하여 사용자 입력을 감지한다.
   - onChange 이벤트는 input 태그의 값이 변경될 때 마다 발생
@@ -96,3 +113,41 @@
   <input type="text" onChange={handleChange} />
   ```
   - event.target은 이벤트가 발생한 요소를 가리킨다.
+
+## 4. 여러개의 state를 객체로 관리
+- useState의 초기값을 객체로 생성하여 여러개의 state를 관리 가능
+  ```javascript
+  // name, nickname 두개의 state를 객체로 관리
+  const [userInput, setUserInput] = useState({
+    name: '',
+    nickname: ''
+  });
+  ```
+  - 하나의 변수로 여러개의 값을 관리 가능
+  - state를 업데이트 할 때는 기존의 값을 복사한 뒤 업데이트 해야 한다.
+  ```javascript
+  const handleChange = (event) => {
+    // 기존의 값을 복사한 뒤 업데이트
+    // 스프레드를 이용하여 기존 내용 복사
+    setUserInput({
+      ...userInput,
+      name: event.target.value
+    });
+  }
+  ```
+  - 기존의 내용을 복사해서 state 유지
+  - 스프레드를 사용하여 기존의 내용을 복사
+
+- 이전 state에 의존적 일 때 콜백함수 사용
+  - 콜백함수를 이용하여 state를 업데이트
+  ```javascript
+  const handleChange = (event) => {
+    setUserInput((prev) => {
+      return {
+        ...prev,
+        name: event.target.value
+      }
+    });
+  }
+  ```
+  - 항상 최신의 상태로 업데이트 한다.
