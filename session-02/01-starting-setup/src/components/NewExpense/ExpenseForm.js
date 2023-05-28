@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./ExpenseForm.css";
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   // 빈 믄자열을 기본값으로 설정
   // event.target.value의 값은 문자열
-  const [enteredTile, setEnteredTile] = useState("");
+  const [enteredTitle, setEnteredTile] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState("");
   // const [userInput, setUserInput] = useState({
@@ -33,7 +33,6 @@ const ExpenseForm = () => {
     //   ...userInput,
     //   enteredAmount: event.target.value,
     // });
-    
   };
 
   const dateChangeHandler = (event) => {
@@ -49,19 +48,27 @@ const ExpenseForm = () => {
 
     // 객체 생성
     const expenseData = {
-      title: enteredTile,
+      title: enteredTitle,
       amount: enteredAmount,
       date: new Date(enteredDate),
+    };
+    props.onSaveExpenseData(expenseData); // 부모 컴포넌트로 전달
+    // 모든 입력 값 초기화
+    setEnteredTile("");
+    setEnteredAmount("");
+    setEnteredDate("");
   };
-  console.log(expenseData);
-};
 
   return (
     <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
-          <input type="text" onChange={titleChangeHandler} />
+          <input
+            type="text"
+            value={enteredTitle}
+            onChange={titleChangeHandler}
+          />
         </div>
         <div className="new-expense__control">
           <label>Amount</label>
@@ -69,6 +76,7 @@ const ExpenseForm = () => {
             type="number"
             min="0.01"
             step="0.01"
+            value={enteredAmount}
             onChange={AmountChangeHandler}
           />
         </div>
@@ -78,6 +86,7 @@ const ExpenseForm = () => {
             type="date"
             min="2019-01-01"
             max="2022-12-31"
+            value={enteredDate}
             onChange={dateChangeHandler}
           />
         </div>

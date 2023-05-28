@@ -151,3 +151,42 @@
   }
   ```
   - 항상 최신의 상태로 업데이트 한다.
+
+## 5. 양방향 바인딩
+- 정의
+  - 변경되는 입력 값만 수신하는 것이 아니라 입력에 새로운 값을 전달 할 수도 있는 것
+
+- input 태그 양방향 바인딩
+  - input 태그의 value 값에 state를 지정
+  ```javascript
+  <input type="text" value={text} onChange={handleChange} />
+  ```
+  - 버튼을 눌러 제출 했을 때 입력값을 다른 변수나 객체에 저장하고 입력값을 초기화
+  - 새로운 값을 입력하기 편해짐
+- 컴포넌트를 이용한 부모로 데이터 전송
+  - props를 이용하여 자식에서 부모로 데이터 전송
+  ```javascript
+  //부모 컴포넌트
+  const dataHandler = (enteredData) => {
+    const data = {
+      ...enteredData,
+      id: Math.random().toString()
+    }
+    console.log(data);
+  };
+  return 
+  ...
+  <Component onData={dataHandler} />
+  ```
+  ```javascript
+  // 자식 컴포넌트
+  ...
+  const data={
+    name: 'name',
+    age: 20
+  }
+  props.onData(data); // 부모로 데이토를 전송. 즉 부모의 함수를 사용
+  ...
+  ```
+  - props의 onData에 부모의 함수를 전달
+  - 자식의 데이터를 부모에 전달 가능
