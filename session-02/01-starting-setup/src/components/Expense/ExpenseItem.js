@@ -6,23 +6,15 @@ import './ExpenseItem.css';
 // props 객체 매개 변수를 사용하여 데이터를 전달
 const ExpenseItem = (props) => {
   // state를 생성하고 초기값을 설정
-  const [title, setTitle] = useState(props.title);
-  function clickHandler() {
-    // state를 업데이트 -> 컴포넌트가 다시 랜더링 된다.
-    setTitle('Updated!');
-    console.log(title); // 업데이트 되기 전의 값이 출력
-  }
-
   return (
     <Card className="expense-item">
       <ExpenseDate
         date = {props.date}
       />
       <div className="expense-item__description">
-        <h2>{title}</h2>
+        <h2>{props.title}</h2>
         <div className="expense-item__price">${props.amount}</div>
       </div>
-      <button onClick={clickHandler}>Change Title</button>
     </Card>
   );
 }
