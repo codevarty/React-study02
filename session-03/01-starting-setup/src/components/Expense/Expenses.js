@@ -8,11 +8,13 @@ const Expenses = (props) => {
   const changeFilterHandler = (enteredYear) => {
     setFilteredYear(enteredYear);
   };
+  // 연도별로 필터링
+  const filteredExpenses = props.items.filter((express) => express.date.getFullYear().toString() === fillteredYear);
   return (
     <div>
       <Card className="expenses">
         <ExpensesFilter selectedYear={fillteredYear} onChangeFilter={changeFilterHandler} />
-        {props.items.map((express) => {
+        {filteredExpenses.map((express) => {
           return(
             <ExpenseItem
               key={express.id}
