@@ -26,3 +26,26 @@
     </li>
   );
   ```
+
+## 2. 조건부 컨텐츠
+- 조건에 따라 각기 다른 내용을 출력
+- 상항 연산자 또는 조건부 표현식을 사용
+  ```javascript
+  return
+  // JSX 코드
+  // 삼항 연산자
+  {value ? <h1>True</h1> : <h1>False</h1>}
+  // 조건부 표현식
+  {value && <h1>True</h1>}
+  ```
+  - 위 코드 중에 삼항 연산자 부분은 value가 true이거나 false일 때 다른 내용을 출력
+  - 조건부 표현식은 value가 true일 때만 출력
+- 변수에 JSX 값을 저장해서 조건부 랜더링하기
+- JSX를 변수에 저장하고 if문을 사용하여 조건부 랜더링
+  ```javascript
+  // 변수에 JSX 코드 저장 가능
+  let isTrue = <h1>True</h1>;
+  return (
+    {isTrue}
+  )
+  ```
