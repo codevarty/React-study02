@@ -49,7 +49,8 @@ const ExpenseForm = (props) => {
     // 객체 생성
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
+      // +기호를 이용해서 문자열을 숫자로 변환
+      amount: +enteredAmount,
       date: new Date(enteredDate),
     };
     props.onSaveExpenseData(expenseData); // 부모 컴포넌트로 전달

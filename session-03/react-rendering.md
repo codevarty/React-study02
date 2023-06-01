@@ -18,6 +18,7 @@
   - 효율적으로 업데이트가 가능함
   - 모든 mapping 요소애는 key를 포함해야 함
   - key는 고유해야 함
+  - props로 받는 값 중 고유한 값을 key로 사용
   ```javascript
   const todoItems = todos.map((todo) =>
     /* key 속성은 고유해야 함*/
@@ -49,3 +50,13 @@
     {isTrue}
   )
   ```
+
+## 3. 요소 스타일 동적 변경
+- 컴포넌트에 style이라는 속성을 추가한다.
+- style 속성에 동적으로 스타일을 변경할 수 있음
+- 속성의 값은 이중 괄호를 작성하는 데 자바스크립트 값을 동적으로 작성하기 위해 사용
+  ```javascript
+  <div style={{background: "red", "margin-bottom": "10px"}}>
+  ```
+  - 위 코드에서 속성 키를 정의할 때 따옴표를 사용해도 되지만 안해도 된다.
+  - 속성 키가 -로 구분되어 있으면 따옴표를 사용해야 한다.
