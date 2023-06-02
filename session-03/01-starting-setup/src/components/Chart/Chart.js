@@ -3,6 +3,7 @@ import ChartBar from "./ChartBar";
 import "./Chart.css";
 const Chart = (props) => {
   const dataPointValues = props.dataPoints.map(dataPoint => dataPoint.value)
+  // 스프레드 연산자를 사용하여 배열의 모든 요소를 추출
   const totalMaximum = Math.max(...dataPointValues);
   return (
     <div className="chart">
