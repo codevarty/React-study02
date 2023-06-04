@@ -36,5 +36,23 @@
     const Button = styled.button`
       style-code..
     `
-
+- 특징
+  - props를 통해 조건부 스타일링을 할 수 있다.
+  - 각 컴포넌트마다 고유의 클래스가 생성된다. -> 컴포넌트 마다 고유한 스타일이 적용된다.
+  ```javascript
+  const Button = styled.button`
+    background: ${props => props.color || 'blue'};
+  `
+  ```
+- media
+  - media를 사용하여 반응형 웹을 만들 수 있다.
+  - `@media (크기)`를 사용하여 화면 크기에 따른 스타일을 적용한다.
 ## 3. css module
+- css 파일을 모듈화하여 사용한다.
+  - 모듈화를 통해 컴포넌트 마다 고유한 스타일을 적용할 수 있다.
+- css 모듈을 사용하는 방법
+  - css 파일 이름을 `파일명.module.css`로 작성한다.
+  - `import styles from '파일명.module.css'`를 통해 css 파일을 불러온다.
+  - 클래스 네임을 `styles.클래스명`으로 작성한다.
+  - 클래스 이름에 -가 들어가면 styles['클래스명']으로 작성한다.
+- 실제 웹브라우저에서 "클래스는 킴포넌트 이름_클래스명_고유한 해시명"으로 생성
