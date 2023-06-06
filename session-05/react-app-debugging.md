@@ -12,3 +12,7 @@
   - 중단점을 설정하고 디버깅을 하는 방법은 크롬 개발자 도구를 사용한다.
   - 중단점은 코드의 특정 부분에서 코드 실행을 멈추게 하는 것이다.
 ## 3. 리액트 개발 도구
+- 크롬의 확장 프로그램으로 React Developer Tools를 설치한다.
+- components 탭을 보면 현재 react 파일의 components 구조를 볼 수 있다.
+  - 오직 react로 만들어진 components만 볼 수 있다.
+  - components를 클릭하면 해당 components의 props와 state를 볼 수 있다.
