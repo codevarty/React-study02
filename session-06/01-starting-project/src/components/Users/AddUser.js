@@ -6,14 +6,27 @@ import ErrorModal from "../UI/ErrorModal";
 const AddUser = (props) => {
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredAge, setEnteredAge] = useState("");
+  const [enteredError, setEnteredError] = useState();
+
+  const errorHandler = () => {
+    setEnteredError(null);
+  };
 
   const addUserHandler = (event) => {
     event.preventDefault();
     if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
+      setEnteredError({
+        title: "Invalid input",
+        message: "Check your input name and age (non empty value)",
+      });
       return;
     }
     // enteredAge는 문자열이기 때문에 숫자로 변환
     if (+enteredAge < 1) {
+      setEnteredError({
+        title: "Invalid age",
+        message: "Check your input age (age > 0))",
+      });
       return;
     }
     props.onAddUser(enteredUsername, enteredAge);
@@ -30,7 +43,13 @@ const AddUser = (props) => {
   // props의 값으로 함수를 전달 할 때 괄호를 붙이면 코드를 바로 실행하기 때문에 붙이지 않는다.
   return (
     <div>
-      <ErrorModal title="An error occured" message="something went wrong" />
+      {enteredError ? (
+        <ErrorModal
+          title={enteredError.title}
+          message={enteredError.message}
+          onCancel={errorHandler}
+        />
+      ) : null}
       <Card className={classes.input}>
         <form onSubmit={addUserHandler}>
           <label htmlFor="username">Username</label>
