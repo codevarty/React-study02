@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 
 import AddUser from './components/Users/AddUser';
 import UsersList from './components/Users/UsersList';
@@ -14,12 +14,13 @@ function App() {
       ];
     });
   };
-
+  // 빈 태그 <> </> 를 사용 하면 DOM에 추가되지 않는다.
+  // Fragment 를 사용해도 DOM에 추가 되자 않는다.
   return (
-    <div>
+    <Fragment>
       <AddUser onAddUser={addUserHandler} />
       <UsersList users={usersList} />
-    </div>
+    </Fragment>
   );
 }
 
