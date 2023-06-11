@@ -98,3 +98,37 @@
   - portals는 어디서든 사용 가능
 
 ## Working with Refs
+- Ref는 참조를 의미하는Reference의 줄임말
+
+- Ref 기능
+  - DOM 요소에 직접 접근해서 조작 가능
+  - 실제 노드 객체에 접근 가능
+
+- Ref 사용
+  - useRef() 훅을 사용
+  - 사용하는 태그에 ref 속성을 추가
+  - ref에서 반환 되는 값은 객체이다.
+  - current를 가지고 있음
+    - current는 ref가 연결된 실제 값을 가지고 있음
+  - 값을 읽기만 할 때는 Ref를 사용
+    ```javascript
+    const inputRef = useRef();
+    const onSubmit = (e) => {
+      e.preventDefault();
+      console.log(inputRef.current.value);
+    };
+    return (
+      <form onSubmit={onSubmit}>
+        <input type="text" ref={inputRef} />
+        <button>Submit</button>
+      </form>
+    );
+    ```
+    - inputRef.current.value를 통해서 input 태그의 값을 읽어옴
+
+- State VS Ref
+  - State 는 값 변경이 많은 경우 사용
+  - Ref는 값이 변경 되지 않고 읽기 전용으로 사용하는 경우 사용
+  - State에 비해 Ref는 코드가 간결해짐, 그러나 자주 쓰이지 않음
+  - State는 React에서 제어되는 값: controlled component
+  - Ref는 DOM에서 제어되는 값 -> React에서 제어되는 값이 아님: uncontrolled component
