@@ -15,12 +15,27 @@ const emailReducer = (state, action) => {
   return { value: "", isValid: false };
 };
 
+const passwordReducer = (state, action) => {
+  if (action.type === "USER_INPUT") {
+    return { value: action.val, isValid: action.val.trim().length > 6 };
+  }
+  if (action.type === "INPUT_BLUR") {
+    return { value: state.value, isValid: state.value.trim().length > 6 };
+  }
+  return { value: "", isValid: false };
+}
+
 const Login = (props) => {
   // const [enteredEmail, setEnteredEmail] = useState("");
   // const [emailIsValid, setEmailIsValid] = useState();
-  const [enteredPassword, setEnteredPassword] = useState("");
-  const [passwordIsValid, setPasswordIsValid] = useState();
+  // const [enteredPassword, setEnteredPassword] = useState("");
+  // const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
+
+  const [passwordState, dispatchPassword] = useReducer(passwordReducer, {
+    value:"",
+    isValid: null
+  })
 
   const [emailState, dispatchEmail] = useReducer(emailReducer, {
     value: "",
@@ -32,41 +47,48 @@ const Login = (props) => {
     return () => {
       console.log("E-CLEANUP");
     };
-  }, [enteredPassword]);
+  }, []);
 
-  // useEffect(()=>{
-  //   // 500 밀리 초 후에 실행
-  //   // 타이머가 한번에 하나만 이용하도록 한번 실행 이후 타이머를 제거해야 함
-  //   const identifier = setTimeout(()=>{
-  //     console.log('Checking form validity!');
-  //   setFormIsValid(
-  //     enteredEmail.includes('@') && enteredPassword.trim().length > 6
-  //   );
-  //   }, 500);
-  //   // 함수를 반환한다.
-  //   return () => {
-  //     console.log('CLEANUP')
-  //     // 실행 되기전 차이머를 제거함 -> 하나의 타이머만 실행되도록 함
-  //     clearTimeout(identifier);
-  //   };
-  // },[enteredEmail, enteredPassword]);
-  // // [] : 앱이 처음 실행될 때만 실행
+  // 별칭 할당 방법 key: value로 디스트럭처링 할당
+  const {isValid: emailIsValid} = emailState;
+  const {isValid: passwordIsValid} = passwordState;
+
+  useEffect(()=>{
+    // 500 밀리 초 후에 실행
+    // 타이머가 한번에 하나만 이용하도록 한번 실행 이후 타이머를 제거해야 함
+    const identifier = setTimeout(()=>{
+      console.log('Checking form validity!');
+    setFormIsValid(
+      emailIsValid && passwordIsValid
+    );
+    }, 500);
+    // 함수를 반환한다.
+    return () => {
+      console.log('CLEANUP')
+      // 실행 되기전 차이머를 제거함 -> 하나의 타이머만 실행되도록 함
+      clearTimeout(identifier);
+    };
+    // [emailState, passwordState] : 이 두개의 state가 변경될 때마다 실행, 값이 이미 유효한 상태에도 실행됨
+    //[emailIsValid, passwordIsValid] : 이 두개의 state가 변경될 때마다 실행 즉 각 객체의 isValid 값이 변경될 때마다 실행
+  },[emailIsValid, passwordIsValid]);
+  // [] : 앱이 처음 실행될 때만 실행
 
   const emailChangeHandler = (event) => {
     // 보통 객체를 반환
     dispatchEmail({type: 'USER_INPUT', val: event.target.value});
 
-    setFormIsValid(
-      // 두개의 다른 state를 사용하기 때문에 함수 형식으로 사용 불가
-      event.target.includes("@") && enteredPassword.trim().length > 6
-    );
+    // setFormIsValid(
+    //   // 두개의 다른 state를 사용하기 때문에 함수 형식으로 사용 불가
+    //   emailState.isValid && passwordState.isValid
+    // );
   };
 
   const passwordChangeHandler = (event) => {
-    setEnteredPassword(event.target.value);
+    // setEnteredPassword(event.target.value);
+    dispatchPassword({type: 'USER_INPUT', val: event.target.value});
 
     setFormIsValid(
-      emailState.value.trim().isValid && event.target.value.trim().length > 6
+      emailState.isValid && passwordState.isValid
     );
   };
 
@@ -77,12 +99,13 @@ const Login = (props) => {
   };
 
   const validatePasswordHandler = () => {
-    setPasswordIsValid(enteredPassword.trim().length > 6);
+    // setPasswordIsValid(enteredPassword.trim().length > 6);
+    dispatchPassword({type: 'INPUT_BLUR'});
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(emailState.value, enteredPassword);
+    props.onLogin(emailState.value, passwordState.value);
   };
 
   return (
@@ -104,14 +127,14 @@ const Login = (props) => {
         </div>
         <div
           className={`${classes.control} ${
-            passwordIsValid === false ? classes.invalid : ""
+            passwordState.isValid === false ? classes.invalid : ""
           }`}
         >
           <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
-            value={enteredPassword}
+            value={passwordState.value}
             onChange={passwordChangeHandler}
             onBlur={validatePasswordHandler}
           />

@@ -62,4 +62,18 @@
   - initialState: state 객체의 초기 값
   - init: 초기 state 객체를 만드는 함수
 
+- useState() VS useReducer()
+  - useState()
+    -  state 관리 도구
+    -  개별 state 및 데이터를 다루기에 적합하다.
+    -  state 업데이트가 쉽고 적은 state를 관리할 때 사용
+ -  useReducer()
+    - 복잡한 state를 관리할 때 사용
+    - 연관된 state를 그룹화 할 수 있다.
+    - 많은 state를 관리할 때 사용
+
 ## 3. Managing App-Wide or Component-Wide State with the Context
+- ContextAPI 를 사용하지 않을 때의 문제점
+  - 컴포넌트 트리의 많은 컴포넌트를 거쳐야 함
+  - 데이터 통신을 위해 불필요한 컴포넌트 연결이 발생한다.
+  - state를 전역으로 관리 필요
