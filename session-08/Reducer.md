@@ -77,3 +77,44 @@
   - 컴포넌트 트리의 많은 컴포넌트를 거쳐야 함
   - 데이터 통신을 위해 불필요한 컴포넌트 연결이 발생한다.
   - state를 전역으로 관리 필요
+
+- context 사용
+  - React.createContext() 함수를 사용하여 context를 생성 인자로는 context의 기본값을 넣어준다.
+  - 콘텍스트.Provider를 사용하여 컴포넌트 트리에 context를 제공 -> 최상위 컴포넌트에 위치
+  - 콘텍스트.Consumer를 사용하여 context를 사용할 컴포넌트를 감싼다. -> context 객체를 받아 사용
+    ```javascript
+      //auth-context.js
+      const AuthContext = React.createContext({
+        // context의 기본값
+      });
+    ```
+    ```javascript
+    //App.js
+    <AuthContext.Provider value = {
+      // context의 값
+    }>
+      // inner contents
+      // 제공자
+    </AuthContext.Provider> 
+    ```
+    ```javascript
+    //inner contents
+    // 리스너
+    <AuthContext.Consumer>
+      {context => {
+        // context 사용
+      }}
+    </AuthContext.Consumer>
+    // or useContext() 사용
+    const context = useContext(AuthContext);
+    ```
+    - context 사용하면 props.chain 없이 state를 전달할 수 있다.
+    - AuthContext.Provider로 제공하는 데이터는 모든 하위 리스너에게 전달된다.
+    - 특정 기능을 하는 컴포넌트에만 context를 사용할 수 있다.
+    - context를 사용하면 컴포넌트를 재사용하기 어렵다. 동적 바인딩 불가능
+
+- context 모듈 집중 그리고 분리(선택사항)
+  - context를 사용하는 컴포넌트와 제공하는 컴포넌트를 분리
+  - App.js 에 있는 state를 context 파일 한 곳에 집중
+  - context 파일을 분리하여 context를 사용하는 컴포넌트와 제공하는 컴포넌트를 분리
+  - 특정 기능을 한 곳에 집중 시키기 때문에 관리 하기 쉬움
