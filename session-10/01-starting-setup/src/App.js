@@ -1,23 +1,30 @@
-import React, {useState} from 'react';
+import React, { useState, useCallback } from "react";
 
-import './App.css';
-import Button from './components/UI/Button/Button';
-import DemoOutput from './components/Demo/DemoOutput';
+import "./App.css";
+import Button from "./components/UI/Button/Button";
+import DemoOutput from "./components/Demo/DemoOutput";
 
 function App() {
-
   const [showParagraph, setShowParagraph] = useState(false);
+  const [allowToggle, setAllowToggle] = useState(false);
 
-  console.log('RUNNING!');
-  const toggleParagraphHandler = () => {
+  console.log("RUNNING!");
+  const toggleParagraphHandler = useCallback(() => {
     //state가 변경될 때 마다 컴포넌트가 재실행 된다.
-    setShowParagraph((prevParagraph) => !prevParagraph);
-  }
-  
+    if (allowToggle) {
+      setShowParagraph((prevParagraph) => !prevParagraph);
+    }
+  }, [allowToggle]); // allowToggle이 변경될 때 마다 함수가 재생성 된다.
+
+  const allowToggleHandler = () => {
+    setAllowToggle(true);
+  };
+
   return (
     <div className="app">
       <h1>Hi there!</h1>
-      <DemoOutput show={showParagraph}/>
+      <DemoOutput show={showParagraph} />
+      <Button onClick={allowToggleHandler}>Allow Toggle</Button>
       <Button onClick={toggleParagraphHandler}>Toggle Paragraph</Button>
     </div>
   );
