@@ -3,11 +3,6 @@ import User from "./User";
 
 import classes from "./Users.module.css";
 
-const DUMMY_USERS = [
-  { id: "u1", name: "Max" },
-  { id: "u2", name: "Manuel" },
-  { id: "u3", name: "Julie" },
-];
 
 // 클래스 컴포넌트는 react hook을 사용할 수 없다.
 class Users extends Component {
@@ -18,6 +13,12 @@ class Users extends Component {
     this.state ={
       showUsers: true,
     };
+  }
+  componentDidUpdate() {
+    // 에러 발생
+    if (this.props.users.length ===0) {
+      throw new Error('users가 없습니다!')
+    }
   }
   toggleUsersHandler() {
     // this.state = false // 이렇게 하면 안된다.
@@ -31,7 +32,7 @@ class Users extends Component {
     
   const usersList = (
     <ul>
-      {DUMMY_USERS.map((user) => (
+      {this.props.users.map((user) => (
         <User key={user.id} name={user.name} />
       ))}
     </ul>
