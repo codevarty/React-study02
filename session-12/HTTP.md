@@ -36,3 +36,22 @@
 - useEffect() 함수를 사용하여 컴포넌트가 렌더링 될 때 API 서버에 GET 요청을 보내고 응답 데이터를 받아온다.
   - 두번째 인자로 실행하는 함수의 포인터를 넣을 수 있음
   - 일반 함수 포인터를 넣으면 컴포넌트가 갠더링 될 때 마다 실행 되므로 useCallBack() 함수를 사용하여 재 랜더링 방지
+
+### 2.1 데이터베이스에 데이터 추가하기 (POST 요청)
+- firebase를 사용하여 데이터베이스에 데이터를 추가할 수 있다.
+- firebase는 데이터베이스가 아니라 데이터베이스를 제공하는 서비스이다.
+
+- fetch 함수의 POST를 사용하여 데이터를 추가한다.
+  ```javascript
+  fetch('https://react-http-6a9a0.firebaseio.com/todos.json', {
+    method: 'POST',
+    body: JSON.stringify(todo),
+    headers: { 'Content-Type': 'application/json' }
+  })
+  ```
+  - 첫번째 인자로 url을 넣는다.
+  - 두번째 인자로 옵션 객체를 넣는다.
+    - method: HTTP 요청 메소드를 넣는다.
+    - body: HTTP 요청 메소드가 POST일 때 데이터를 넣는다.
+    - headers: HTTP 요청 헤더를 넣는다.
+  - json 형태의 데이터를 보내기 위해서는 JSON.stringify() 함수를 사용한다.
