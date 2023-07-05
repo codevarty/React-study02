@@ -4,7 +4,7 @@ import Card from './Card';
 import uesCounter from '../hooks/use-counter';
 
 const ForwardCounter = () => {
-  const counter = uesCounter((prevcouner) => prevcouner + 1);
+  const counter = uesCounter();
 
   return <Card>{counter}</Card>;
 };
