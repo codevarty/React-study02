@@ -5,34 +5,29 @@ import TaskForm from "./TaskForm";
 import useHttp from "../../hooks/use-http";
 
 const NewTask = (props) => {
-  const [taskText, setTaskText] = useState("");
+  const { isLoading, error, sendRequest: sendTaskRequest } = useHttp();
+
+  const createTask = (taskText, taskData) => {
+    const generatedId = taskData.name; // firebase-specific => "name" contains generated id
+    const createdTask = { id: generatedId, text: taskText };
+
+    props.onAddTask(createdTask);
+  };
 
   const enterTaskHandler = async (taskText) => {
-    setTaskText(taskText);
-  
-    await sendRequest();
-  }
-
-    const applyData = (data) => {
-      const generatedId = data.name; // firebase-specific => "name" contains generated id
-      const createdTask = { id: generatedId, text: taskText };
-
-      props.onAddTask(createdTask);
-    };
-
-
-    const { isLoading, error, sendRequest } = useHttp(
+    sendTaskRequest(
       {
-        url: "https://react-http-5ac8d-default-rtdb.firebaseio.com/tasks.json",
-        method: "POST",
+        url: 'https://react-http-5ac8d-default-rtdb.firebaseio.com/tasks.json',
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: { text: taskText },
       },
-      applyData
+      createTask.bind(null, taskText)
     );
-    
+  };
+
 
   return (
     <Section>

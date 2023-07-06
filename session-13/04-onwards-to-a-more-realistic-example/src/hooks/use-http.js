@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useState, useCallback} from "react";
 
 // 공통된 부분을 넣음
-const useHttp = (requestConfig, applyData) => {
+const useHttp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const sendRequest = async () => {
+  // useCallback을 사용하여 험수의 재생성을 막음
+  const sendRequest = useCallback(async (requestConfig, applyData) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -29,7 +30,8 @@ const useHttp = (requestConfig, applyData) => {
       setError(err.message || "Something went wrong!");
     }
     setIsLoading(false);
-  };
+  },[]); //reauestConfig와 applyData는 매개변수이므로 의존성 배열에 넣지 않음
+
   return {
     isLoading,
     error,
