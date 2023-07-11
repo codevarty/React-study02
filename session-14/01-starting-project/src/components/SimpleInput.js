@@ -1,49 +1,52 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 const SimpleInput = (props) => {
-  const nameInputRef = useRef();
   const [enteredName, setEnteredName] = useState(""); // // 입력된 값을 초기화할 때 사용
-  const [enteredNameValid, setEnteredNameValid] = useState("true");
   const [enteredNameTouched, setEnteredNameTouched] = useState("false");
 
-  useEffect(() => {
-    if (enteredNameValid) {
-      console.log("Name Input is valid!");
-    }
-  }, [enteredNameValid]);
+  const [enteredEmail, setEnteredEmail] = useState(""); // // 입력된 값을 초기화할 때 사용
+  const [enteredEmailTouched, setEnteredEmailTouched] = useState("false");
+
+  // enteredName이 리 랜더링 될 때마다 아래의 코드가 실행된다.
+  const enteredNameValid = enteredName.trim() !== "";
+  const enteredEmailValid = enteredEmail.trim() !== "" && enteredEmail.includes('@');
+  const nameInputIsInvalid = !enteredNameValid && enteredNameTouched;
+  const emailInputIsInvalid = !enteredEmailValid && enteredEmailTouched;
+  const formIsValid = enteredNameValid && enteredEmailValid;
+
+  const emailInputChangeHandler = (event) => {
+    setEnteredEmail(event.target.value);  
+  };
+
+  const emailInputBlurHandler = (event) => {
+    setEnteredEmailTouched(true);
+  };
 
   const nameInputChangeHandler = (event) => {
     setEnteredName(event.target.value);
+
+    // 즉각적인 유효성 검사를 위해 event.target.value를 사용한다.
   };
 
   const nameInputBlurHandler = (event) => {
     setEnteredNameTouched(true);
-
-    if (enteredName.trim() === "") {
-      setEnteredNameValid(false); // 유효성 검사를 통과하지 못하면 false
-      return; // 입력된 값이 없으면 아무것도 하지 않는다.
-    }
-  }
+  };
 
   const formSubmissionHandler = (event) => {
     event.preventDefault(); // form의 기본 동작으로 브라우저가 자동적으로 새로침이 된다. 이 새로고침을 방지하기 위해서 사용한다.
 
     setEnteredNameTouched(true);
-    if (enteredName.trim() === "") {
-      setEnteredNameValid(false); // 유효성 검사를 통과하지 못하면 false
+    setEnteredEmailTouched(true);
+    if (!enteredNameValid || !enteredEmailValid) {
       return; // 입력된 값이 없으면 아무것도 하지 않는다.
     }
-    setEnteredNameValid(true); // 유효성 검사를 통과하면 true
-    console.log(enteredName);
-
-    const enteredValue = nameInputRef.current.value;
-    console.log(enteredValue);
 
     setEnteredName(""); // 입력된 값을 초기화
-    // Ref를 통해서 값 초기화가 가능하나 실제 DOM을 조작하는 것이기 때문에 권장하지 않는다. => 일반 자바스크립트 방법 사용
-    // nameInputRef.current.value = ""; // 입력된 값을 초기화
+    setEnteredEmail(""); // 입력된 값을 초기화
+    setEnteredEmailTouched(false);
+    setEnteredNameTouched(false);
   };
-  const nameInputIsInvalid = !enteredNameValid && enteredNameTouched;
-  const formInputClasses = nameInputIsInvalid
+
+  const formInputClasses = nameInputIsInvalid && emailInputIsInvalid
     ? "form-control invalid"
     : "form-control";
   return (
@@ -51,19 +54,26 @@ const SimpleInput = (props) => {
       <div className={formInputClasses}>
         <label htmlFor="name">Your Name</label>
         <input
-          ref={nameInputRef}
           type="text"
           id="name"
           onChange={nameInputChangeHandler}
           onBlur={nameInputBlurHandler}
           value={enteredName}
         />
+        <label htmlFor="email">Your Email</label>
+        <input
+          type="text"
+          id="email"
+          onChange={emailInputChangeHandler}
+          onBlur={emailInputBlurHandler}
+          value={enteredEmail}
+        />
       </div>
-      {nameInputIsInvalid && (
-        <p className="error-text">Name must not be empty.</p>
+      {nameInputIsInvalid && emailInputIsInvalid && (
+        <p className="error-text">Name must not be empty. and Email must not be empty and have to includes</p>
       )}
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={!formIsValid}>Submit</button>
       </div>
     </form>
   );
