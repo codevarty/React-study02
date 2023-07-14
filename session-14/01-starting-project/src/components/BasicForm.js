@@ -27,8 +27,7 @@ const BasicForm = (props) => {
     reset: resetEmailInput,
   } = useInput((value) => value.includes("@"));
 
-  const formIsValid =
-    enteredFirstNameValid && enteredLastNameValid && enteredEmailValid;
+  const formIsValid = enteredFirstNameValid && enteredLastNameValid && enteredEmailValid;
 
   const formSubmissionHandler = (event) => {
     event.preventDefault();
