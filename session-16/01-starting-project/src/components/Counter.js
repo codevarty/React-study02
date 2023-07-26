@@ -6,12 +6,20 @@ import classes from "./Counter.module.css";
 const Counter = () => {
   const dispatch = useDispatch(); // useDispatch() 함수를 사용하여 dispatch 함수를 가져온다. (no need to argument)
   const counter = useSelector((state) => state.counter); // useSelector() 함수를 사용하여 state.counter 값을 가져온다.
-  const toggleCounterHandler = () => {};
+  const show = useSelector((state) => state.showCounter); 
+  
+  const toggleCounterHandler = () => {
+    dispatch({ type: "toggle" });
+  };
 
   const incrementHandler = () => {
     dispatch({ type: "increment" });
   };
 
+  const increaseHandler = () => {
+    dispatch({ type: "increase", amount: 5 }); // action 객체에 amount 값을 추가한다.
+  }
+  
   const decrementHandler = () => {
     dispatch({ type: "decrement" });
   };
@@ -19,9 +27,10 @@ const Counter = () => {
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      <div className={classes.value}>{counter}</div>
+      { show && <div className={classes.value}>{counter}</div>}
       <div>
         <button onClick={incrementHandler}>Increment</button>
+        <button onClick={increaseHandler}>Increase by 5</button>
         <button onClick={decrementHandler}>Decrement</button>
       </div>
       <button onClick={toggleCounterHandler}>Toggle Counter</button>
