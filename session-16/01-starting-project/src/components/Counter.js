@@ -1,6 +1,7 @@
 
 import { useSelector, useDispatch } from "react-redux";
 import classes from "./Counter.module.css";
+import { counterActions } from "../store/index";
 
 // 함수형 컴포넌트
 const Counter = () => {
@@ -9,19 +10,19 @@ const Counter = () => {
   const show = useSelector((state) => state.showCounter); 
   
   const toggleCounterHandler = () => {
-    dispatch({ type: "toggle" });
+    dispatch(counterActions.toggleCounter()); // action을 dispatch 한다. (action을 dispatch 하면 reducer가 실행된다.
   };
 
   const incrementHandler = () => {
-    dispatch({ type: "increment" });
+    dispatch(counterActions.increment());
   };
 
   const increaseHandler = () => {
-    dispatch({ type: "increase", amount: 5 }); // action 객체에 amount 값을 추가한다.
+    dispatch(counterActions.increase(5)); // 숫자를 인자로 전달할 수 있다.
   }
   
   const decrementHandler = () => {
-    dispatch({ type: "decrement" });
+    dispatch(counterActions.decrement());
   };
 
   return (

@@ -1,50 +1,30 @@
-import { createStore } from 'redux';
+import { createSlice, configureStore } from '@reduxjs/toolkit';
 
 // 객체 형태로 state를 정의하기 때문에 여러개의 state를 정의할 수 있다.
 const initialState = { counter: 0, showCounter: true };
 
-const counterReducer = (state = initialState, action) => {
-  if(action.type === 'increment') {
-    /*
-    **아래와 같이 기존의 state를 변경하는 것 주의!!**
-
-    state.counter++;
-    return state;
-    OR
-    return {
-      counter: state.counter
-      showCounter: state.showCounter,
-    }
-     */
-    return {
-      counter: state.counter + 1,
-      showCounter: state.showCounter,
-    };
+const counterSlice = createSlice({
+  name: 'counter', // slice의 이름을 정의한다.
+  initialState, // 초기 state를 정의한다. (위에서 정의한 initialState를 사용한다.)
+  reducers: { // reducer를 정의한다.
+    increment(state) {
+      state.counter++; // state를 직접 변경해도 된다. => immer.js 라이브러리를 사용하기 때문에 가능하다.
+    },
+    decrement(state) {
+      state.counter--;
+    },
+    increase(state, action) {
+      state.counter = state.counter + action.payload; // action 객체에 amount 값을 추가해서 동적으로 값을 변경할 수 있다.
+    },
+    toggleCounter(state) {
+      state.showCounter = !state.showCounter;
+    },
   }
+});
 
-  if(action.type === 'increase') {
-    return {
-      counter: state.counter + action.amount, // action 객체에 amount 값을 추가해서 동적으로 값을 변경할 수 있다.
-      showCounter: state.showCounter,
-    };
-  }
+const store = configureStore({
+  reducer: counterSlice.reducer // reducer를 등록한다.
+});
 
-  if (action.type === 'decrement') {
-    return {
-      counter: state.counter - 1,
-      showCounter: state.showCounter,
-    };
-  }
-
-  if (action.type === 'toggle') {
-    return {
-      showCounter: !state.showCounter,
-      counter: state.counter,
-    }
-  }
-  return state;
-}
-
-const store = createStore(counterReducer);
-
+export const counterActions = counterSlice.actions; // action을 추출한다.
 export default store; // 외부에서 사용할 수 있도록 export 한다.

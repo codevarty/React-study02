@@ -69,3 +69,29 @@
 ## 리덕스 사용 Toolkit
 - 리덕스 사용을 쉽게 해주는 라이브러리
 - 기존 리덕스 사용 문제점을 쉽게 해결해줌
+- `npm install @reduxjs/toolkit` 명령어로 설치
+
+- `createslice` 함수를 사용하여 리듀서 함수와 액션을 한 번에 생성할 수 있음
+  - `createSlice` 함수의 매개변수로 리듀서 함수의 이름과 초기 상태 객체를 전달
+    ```javascript
+    createSlice({
+      name: '이름',
+      initialState: {초기 상태 객체},
+      reducers: {
+        // 직접 state를 변경할 수 있음
+        리듀서 함수 이름: (state, action) => {state 변경}
+      }
+    })
+    ```
+  - 리듀서 함수의 이름을 사용하여 액션을 디스패치할 수 있음
+
+- `configureStore` 함수를 사용하여 스토어를 생성할 수 있음
+  - `configureStore` 함수의 매개변수로 리듀서 함수를 전달
+  - 여러개의 리듀서 함수를 전달할 수 있음
+  ```javascript
+  configureStore({
+    reducer: 리듀서 함수
+    // 여러개의 리듀서 함수를 전달할 수 있음
+    // reducer: {리듀서 함수1, 리듀서 함수2}
+  })
+  ```
