@@ -1,13 +1,13 @@
 
 import { useSelector, useDispatch } from "react-redux";
 import classes from "./Counter.module.css";
-import { counterActions } from "../store/index";
+import { counterActions } from "../store/counter";
 
 // 함수형 컴포넌트
 const Counter = () => {
   const dispatch = useDispatch(); // useDispatch() 함수를 사용하여 dispatch 함수를 가져온다. (no need to argument)
-  const counter = useSelector((state) => state.counter); // useSelector() 함수를 사용하여 state.counter 값을 가져온다.
-  const show = useSelector((state) => state.showCounter); 
+  const counter = useSelector((state) => state.counter.counter); // useSelector() 함수를 사용하여 state.counter 값을 가져온다.
+  const show = useSelector((state) => state.counter.showCounter); 
   
   const toggleCounterHandler = () => {
     dispatch(counterActions.toggleCounter()); // action을 dispatch 한다. (action을 dispatch 하면 reducer가 실행된다.
