@@ -6,4 +6,12 @@
   - useEffect를 사용하여 컴포넌트에 직접 비동기 로직 작성
   - 리덕스 툴킷을 사용하지 않고 action creator를 만들어서 비동기 로직 작성
   - 프론트엔드에서 백엔드로 전송한 다음 리덕스에서 백엔드의 응답을 받아와서 처리 (프론트 엔드의 작업량 증가)
+- useEffect를 사용하여 비동기 로직 작성
+  - state가 변경될 때 마다 비동기 로직이 실행된다.
+  ```javascript
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
+  ```
+  - 단점: 앱이 시작할 때 빈 state를 백엔드에 보내서 데이터를 덮을 수 있다.
 ## Redux devtools
