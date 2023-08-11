@@ -24,8 +24,29 @@ const Router = createBrowserRouter([
 ```javascript
 const Router = createBrowserRouter([
   {path: '/', element: Home},
-  {path: '/about', element: About}, // /about 경로 추가 => About 컴포넌트 랜더링
+  // /about 경로 추가 => About 컴포넌트 랜더링
+  {path: '/about', element: About}, 
 ]);
+```
+### 1.3 Link 컴포넌트로 경로 이동하기
+- HTML의 anchor 태그는 페이지를 새로고침하면서 이동한다. (서버에 페이지를 요청 (잘못된 방법))
+- Link 컴포넌트는 페이지를 새로고침하지 않고 이동한다. (프론트에서만 처리)
+```javascript
+import {Link} from 'react-router-dom';
+// '/about' 경로로 이동
+<Link to="/about">About</Link>
+```
+### 1.4 오류 페이지 만들기
+- createBrowserRouter의 `errorElement` 속성을 사용하여 오류 페이지를 설정한다.
+```javascript
+const Router = createBrowserRouter({
+  // 경로가 없는 경우 NotFound 컴포넌트 랜더링
+  errorElement: <NotFound />,
+  routes: [
+    {path: '/', element: Home},
+    {path: '/about', element: About},
+  ],
+});
 ```
 
 ## 2. Data fetching  & Submission
