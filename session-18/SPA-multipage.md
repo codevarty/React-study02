@@ -115,4 +115,36 @@ function About() {
 }
 ```
 
+- 절대 경로 상대 경로
+  - 절대 경로는 항상 `/` 문자로 시작한다.
+  - 상대 경로는 `/` 문자로 시작하지 않는다.
+
+```javascript
+const Router = createBrowserRouter({
+  routes: [
+    { path: "/", element: <Home /> },
+    // 절대 경로
+    { path: "/about", element: <About /> },
+    // 상대 경로
+    { path: "about", element: <About /> },
+  ],
+});
+```
+
+- relative 속성을 사용하여 상대 경로를 설정할 수 있다.
+  - `relative="path"` 형태는 `path` 경로를 기준으로 상대 경로를 설정한다.
+
+```javascript
+import { Link } from "react-router-dom";
+function About() {
+  return (
+    <div>
+      <Link to=".." relative="path">
+        About
+      </Link>
+    </div>
+  );
+}
+```
+
 ## 2. Data fetching & Submission

@@ -23,9 +23,9 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
-      { path: "/", element: <HomePage /> },
-      { path: "/products", element: <ProductsPage /> },
-      { path: "/products/:productId", element: <ProductDetailPage/>},
+      { index: true, element: <HomePage /> }, // path: ''와 같다.
+      { path: "products", element: <ProductsPage /> },
+      { path: "products/:productId", element: <ProductDetailPage /> },
     ],
   },
 ]);
