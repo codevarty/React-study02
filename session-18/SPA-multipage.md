@@ -151,7 +151,7 @@ function About() {
 
 ### 2.1 데이터 가져오기
 
-- loder 함수를 사용하여 데이터를 가져온다.
+- loader 함수를 사용하여 데이터를 가져온다.
 - createBrowserRouter의 `loader` 속성을 사용하여 데이터를 가져온다.
 
 ```javascript
@@ -170,7 +170,7 @@ const Router = createBrowserRouter({
 
 - loader 함수는 프론트에서만 실행된다.
 - loader 함수는 라우터 컴포넌트가 랜더링되기 전에 실행된다.
-- loder 함수의 반환값을 사용하기 위해서 해당 컴포넌트에서 useLoaderData 훅을 사용한다.
+- loader 함수의 반환값을 사용하기 위해서 해당 컴포넌트에서 useLoaderData 훅을 사용한다.
 - useLoaderData 훅은 해당 컴포넌트 보다 상위 컴포넌트에서 사용할 수 없고 같거나 낮은 컴포넌트에서 사용이 가능하다.
 
 ```javascript
@@ -185,5 +185,22 @@ function Home() {
       ))}
     </div>
   );
+}
+```
+### 2.2 오류 처리하기
+
+- loader 함수에서 오류가 발생하면 오류 페이지를 랜더링한다.
+- json 함수를 사용하여 JSON 데이터를 반환한다.
+- json 형태로 오류 메세지 및 코드를 반환한다.
+
+```javascript
+// fetch 오류 발생
+throw json({ message: "Could not fetch events." }, { status: 500 });
+```
+```javascript
+// json 데이터를 받는 코드
+const data = useLoaderData();
+if (data.status === 500) {
+  return <div>{data.message}</div>;
 }
 ```

@@ -22,17 +22,21 @@
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./routes/Home";
-import EventsPage from "./routes/Events";
-import EventDetailPage from "./routes/EventDetail";
+import EventsPage, { loader as eventsLoader } from "./routes/Events";
+import EventDetailPage, {
+  loader as eventDetailLoader,
+} from "./routes/EventDetail";
 import NewEventPage from "./routes/NewEvent";
 import EditEventPage from "./routes/EditEvent";
 import RootLayout from "./routes/Root";
 import EventsRootLayout from "./routes/EventsRoot";
+import ErrorPage from "./routes/Error";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <ErrorPage />, // error가 발생하면 이 element를 보여준다.
     children: [
       { index: true, element: <HomePage /> },
       {
@@ -42,18 +46,13 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <EventsPage />,
-            loader: async () => {
-              const response = await fetch("http://localhost:8080/events");
-
-              if (!response.ok) {
-                // ... 
-              } else {
-                const resData = await response.json();
-                return resData.events; // 이 값이 EventsPage의 props.events에 전달된다.
-              }
-            },
+            loader: eventsLoader,
           },
-          { path: ":eventId", element: <EventDetailPage /> },
+          {
+            path: ":eventId",
+            element: <EventDetailPage />,
+            loader: eventDetailLoader,
+          },
           { path: "new", element: <NewEventPage /> },
           { path: ":eventId/edit", element: <EditEventPage /> },
         ],
