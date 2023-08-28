@@ -187,6 +187,7 @@ function Home() {
   );
 }
 ```
+
 ### 2.2 오류 처리하기
 
 - loader 함수에서 오류가 발생하면 오류 페이지를 랜더링한다.
@@ -197,10 +198,53 @@ function Home() {
 // fetch 오류 발생
 throw json({ message: "Could not fetch events." }, { status: 500 });
 ```
+
 ```javascript
 // json 데이터를 받는 코드
 const data = useLoaderData();
 if (data.status === 500) {
   return <div>{data.message}</div>;
 }
+```
+
+### 2.3 상위 라우트 LoaderData 사용하기
+
+- useRouteLoaderData 훅을 사용하여 상위 라우트의 LoaderData를 조회한다.
+- 상위 라우트에 id 값을 줘서 라우트에 id값을 설정한다.
+
+```javascript
+// 상위 라우트의 loader를 사용한다.
+const data = useRouteLoaderData("route-id");
+```
+
+### 2.4 데이터 제출하기
+
+- action 함수를 사용하여 데이터를 제출한다.
+- loader 함수와 마찬가지로 페이지가 랜더링 될 때 실행된다.
+- action 함수는 프론트에서만 실행된다.
+
+```javascript
+// formData 함수를 사용하여 데이터를 조회한다.
+const data = await request.formData();
+
+const eventData = {
+  value1: data.get('value1'),
+  value2: data.get('value2'),
+  // ...
+  };
+
+const response = await fetch("http://localhost:8080/events", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(eventData),
+});
+if (!response.ok) {
+  // error code.
+}
+
+// 성공적으로 데이터를 제출하면 /events로 이동한다.
+return redirect("/events");
+```
 ```
