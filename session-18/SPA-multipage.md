@@ -228,10 +228,10 @@ const data = useRouteLoaderData("route-id");
 const data = await request.formData();
 
 const eventData = {
-  value1: data.get('value1'),
-  value2: data.get('value2'),
+  value1: data.get("value1"),
+  value2: data.get("value2"),
   // ...
-  };
+};
 
 const response = await fetch("http://localhost:8080/events", {
   method: "POST",
@@ -247,4 +247,33 @@ if (!response.ok) {
 // 성공적으로 데이터를 제출하면 /events로 이동한다.
 return redirect("/events");
 ```
+
+- useSubmitting() 훅을 사용하여 제출 중인지 확인한다.
+
+```javascript
+import { useSubmitting } from "react-router-dom";
+function Home() {
+  const submitting = useSubmitting();
+  // 제출 중인 경우
+  if (submitting) {
+    return <div>Submitting...</div>;
+  }
+  return <div>Home</div>;
+}
+```
+### 2.5 사용자 검증 오류 처리하기
+
+- useActionData() 훅을 사용하여 action 함수에서 반환한 데이터를 조회한다.
+- useActionData() 훅은 useLoaderData() 훅과 마찬가지로 상위 컴포넌트에서 사용할 수 없다.
+
+```javascript
+import { useActionData } from "react-router-dom";
+function Home() {
+  const data = useActionData();
+  // 오류가 발생한 경우
+  if (data.status === 400) {
+    return <div>{data.message}</div>;
+  }
+  return <div>Home</div>;
+}
 ```
